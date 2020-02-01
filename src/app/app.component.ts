@@ -24,16 +24,12 @@ function logCall(target: object, name: string, descriptor: any) {
   return descriptor;
 }
 
-function printStackTrace(constructor: any): any {
-  console.log("0 - ", constructor.name);
-  let caller = constructor.caller;
-  let i = 1;
-  while (caller) {
-    console.log(`{i} - `, caller.name);
-    i++;
-  }
-  return (...args) => {
-    return new constructor(...args);
+function stackTraceOnConstruct(targetConstructor: any): any {
+  // Create a new constructor, which wraps the previous one.
+  return function(...args: any) {
+    const err = new Error();
+    console.log(err.stack);
+    return new targetConstructor(...args);
   };
 }
 
@@ -42,7 +38,7 @@ function printStackTrace(constructor: any): any {
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"]
 })
-@printStackTrace
+@stackTraceOnConstruct
 export class AppComponent {
   title = "ng-intro";
 
