@@ -24,11 +24,25 @@ function logCall(target: object, name: string, descriptor: any) {
   return descriptor;
 }
 
+function printStackTrace(constructor: any): any {
+  console.log("0 - ", constructor.name);
+  let caller = constructor.caller;
+  let i = 1;
+  while (caller) {
+    console.log(`{i} - `, caller.name);
+    i++;
+  }
+  return (...args) => {
+    return new constructor(...args);
+  };
+}
+
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"]
 })
+@printStackTrace
 export class AppComponent {
   title = "ng-intro";
 
