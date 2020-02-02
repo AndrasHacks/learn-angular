@@ -40,7 +40,7 @@ function stackTraceOnConstruct(targetConstructor: any): any {
 })
 @stackTraceOnConstruct
 export class AppComponent {
-  title = "ng-intro";
+  title = "Tour of Heroes";
 
   constructor() {
     this.aSimpleMethod();
